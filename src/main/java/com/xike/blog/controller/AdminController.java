@@ -106,7 +106,8 @@ public class AdminController {
                     request.getParameter("cateName"),
                     request.getParameter("content")
             );
-            Integer articleId = (Integer) request.getAttribute("id");
+            Integer articleId = Integer.parseInt(request.getParameter("id"));
+            System.out.println(articleId);
             article.setId(articleId);
             articleMapper.updateByPrimaryKey(article);
             attributes.addFlashAttribute("success", "修改成功!");

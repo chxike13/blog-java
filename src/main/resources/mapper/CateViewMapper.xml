@@ -13,16 +13,4 @@
     select catename, num
     from cate_num
   </select>
-  <resultMap id="BaseResultMap" type="com.xike.blog.model.CateView">
-    <result column="catename" jdbcType="VARCHAR" property="catename" />
-    <result column="num" jdbcType="BIGINT" property="num" />
-  </resultMap>
-  <insert id="insert" parameterType="com.xike.blog.model.CateView">
-    insert into cate_num (catename, num)
-    values (#{catename,jdbcType=VARCHAR}, #{num,jdbcType=BIGINT})
-  </insert>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select catename, num
-    from cate_num
-  </select>
 </mapper>
