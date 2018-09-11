@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"><!--Head-->
+<head>
+    <meta charset="utf-8">
+    <title>后台登录</title>
+    <meta name="description" content="login page">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link th:href="@{/static/background/style/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/font-awesome.css}" rel="stylesheet">
+    <!--Beyond styles-->
+    <link id="beyond-link" th:href="@{/static/background/style/beyond.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/demo.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/animate.css}" rel="stylesheet">
+</head>
+<!--Head Ends-->
+<!--Body-->
+
+<body>
+<div class="login-container animated fadeInDown">
+    <form th:action="@{/admin/login}" method="post">
+        <div class="loginbox bg-white">
+            <div class="loginbox-title">登录</div>
+            <div class="loginbox-textbox">
+                <input value="" class="form-control" placeholder="请输入用户名" name="username" type="text">
+            </div>
+            <div class="loginbox-textbox">
+                <input class="form-control" placeholder="请输入密码" name="password" type="password">
+            </div>
+            <div class="loginbox-submit">
+                <input class="btn btn-primary btn-block" value="登录" type="submit">
+            </div>
+        </div>
+        <div class="logobox">
+            <p class="text-center">RobotOne</p>
+        </div>
+    </form>
+</div>
+<!--Basic Scripts-->
+<script th:src="@{/static/background/style/jquery.js}"></script>
+<script th:src="@{/static/background/style/bootstrap.js}"></script>
+<script th:src="@{/static/background/style/jquery_002.js}"></script>
+<!--Beyond Scripts-->
+<script th:src="@{/static/background/style/beyond.js}"></script>
+</body>
+<!--Body Ends-->
+</html>

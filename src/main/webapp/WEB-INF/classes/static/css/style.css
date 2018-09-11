@@ -1,0 +1,109 @@
+html,body{
+    height: 100%;
+}
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    color: #fff;
+    /*background-color: #f1f1f1;*/
+    background-color: #21292f;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    box-shadow: 10px 10px 10px gray;
+}
+
+.sidebar a {
+    /*display: block;*/
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar img{
+    width: 150px;
+    height: 150px;
+}
+
+.sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+.sidebar h3{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+.sidebar li{
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+.nav-stacked > li + li {
+    margin-top: 0;
+    margin-left: 0;
+}
+div.content {
+    margin-left: 300px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {float: left;}
+    div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
+}
+
+.article{
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-left-width: 2px;
+    border-left-style: solid;
+    border-color: rgb(246, 246, 246);
+    box-shadow: 10px 10px 5px #888888;
+    background-color: rgb(246, 246, 246);
+}
+.description{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*background-color: rgb(246, 246, 246);*/
+}
+.content a:hover { text-decoration:none;}
+article{
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: rgb(246, 246, 246);
+    font-size: 20px;
+    padding-bottom: 20px;
+}

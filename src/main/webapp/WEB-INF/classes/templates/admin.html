@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>博客后台</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="Dashboard">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Basic Styles-->
+    <link th:href="@{/static/background/style/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/weather-icons.css}" rel="stylesheet">
+
+    <!--Beyond styles-->
+    <link id="beyond-link" th:href="@{/static/background/style/beyond.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/static/background/style/demo.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/typicons.css}" rel="stylesheet">
+    <link th:href="@{/static/background/style/animate.css}" rel="stylesheet">
+    <link th:href="@{/static/css/bootstrap-select.css}" rel="stylesheet">
+
+</head>
+<body>
+<!-- 头部 -->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="navbar-container">
+            <!-- Navbar Barnd -->
+            <div class="navbar-header pull-left">
+                <a th:href="@{/background/index}" class="navbar-brand">
+                    <small>
+                        <img src="/static/background/images/laravellogo.svg" alt="">
+                    </small>
+                </a>
+            </div>
+            <!-- /Navbar Barnd -->
+            <!-- Sidebar Collapse -->
+            <div class="sidebar-collapse" id="sidebar-collapse">
+                <i class="collapse-icon fa fa-bars"></i>
+            </div>
+            <!-- /Sidebar Collapse -->
+            <!-- Account Area and Settings -->
+            <div class="navbar-header pull-right">
+                <div class="navbar-account">
+                    <ul class="account-area">
+                        <li>
+                            <a class="login-area dropdown-toggle" data-toggle="dropdown">
+                                <div class="avatar" title="View your public profile">
+                                    <img src="/static/background/images/adam-jansen.jpg">
+                                </div>
+                                <section>
+                                    <h2><span class="profile"><span></span></span></h2>
+                                </section>
+                            </a>
+                            <!--Login Area Dropdown-->
+                            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+                                <li class="username"><a>David Stevenson</a></li>
+                                <li class="dropdown-footer">
+                                    <a th:href="@{/background/login}">
+                                        退出登录
+                                    </a>
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a th:href="@{/background/modifyPassword}">
+                                        修改密码
+                                    </a>
+                                </li>
+                            </ul>
+                            <!--/Login Area Dropdown-->
+                        </li>
+                        <!-- /Account Area -->
+                        <!--Note: notice that setting div must start right after account area list.
+                            no space must be between these elements-->
+                        <!-- Settings -->
+                    </ul>
+                </div>
+            </div>
+            <!-- /Account Area and Settings -->
+        </div>
+    </div>
+</div>
+
+<!-- /头部 -->
+<div class="main-container container-fluid">
+    <div class="page-container">
+        <!-- Page Sidebar -->
+        <div class="page-sidebar" id="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="nav sidebar-menu">
+                <!--Dashboard-->
+
+                <li class="open">
+                    <a href="" class="menu-dropdown">
+                        <i class="menu-icon fa fa-file-text"></i>
+                        <span class="menu-text">文档</span>
+                        <i class="menu-expand"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a th:href="@{/admin/articleList}">
+                                <span class="menu-text">文章管理</span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a href="">-->
+                                <!--<span class="menu-text">标签管理</span>-->
+                                <!--<i class="menu-expand"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <li>
+                            <a th:href="@{/admin/cateList}">
+                                <span class="menu-text">栏目管理</span>
+                                <i class="menu-expand"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /Sidebar Menu -->
+        </div>
+        <!-- /Page Sidebar -->
+        <!-- Page Content -->
+        <div class="page-content">
+            <!-- Page Breadcrumb -->
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li class="active">控制面板</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+
+            <!-- Page Body -->
+            <div th:insert="~{layout :: index}" th:if="${mark.equals('index')}" class="page-body" ></div>
+            <div th:insert="~{layout :: articleList}" th:if="${mark.equals('articleList')}" class="page-body"></div>
+            <div th:insert="~{layout :: cateList}" th:if="${mark.equals('cateList')}" class="page-body"></div>
+            <div th:insert="~{layout :: addArticle}" th:if="${mark.equals('addArticle')}" class="page-body"></div>
+            <div th:insert="~{layout :: addCate}" th:if="${mark.equals('addCate')}" class="page-body"></div>
+            <div th:insert="~{layout :: modArticle}" th:if="${mark.equals('modArticle')}" class="page-body"></div>
+            <div th:insert="~{layout :: modCate}" th:if="${mark.equals('modCate')}" class="page-body"></div>
+        </div>
+
+        <!-- /Page Body -->
+    </div>
+    <!-- /Page Content -->
+</div>
+
+<!--Basic Scripts-->
+<script src="/static/background/style/jquery_002.js"></script>
+<script src="/static/background/style/bootstrap.js"></script>
+<script src="/static/js/bootstrap-select.js"></script>
+<script src="/static/background/style/jquery.js"></script>
+<!--Beyond Scripts-->
+<script src="/static/background/style/beyond.js"></script>
+<script src="/static/background/style/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#contentEditor');
+    // 或者 var editor = new E( document.getElementById('#editor') )
+    var $text1 = $('#content');
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $text1.val(html)
+    };
+    editor.customConfig.uploadImgServer = '';
+    editor.customConfig.uploadFileName = '图片';
+    editor.customConfig.debug=true;
+    editor.create();
+    // 初始化 textarea 的值
+    $text1.val(editor.txt.html());
+</script>
+
+</body>
+</html>

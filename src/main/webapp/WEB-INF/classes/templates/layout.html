@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="index">
+    <div style="text-align:center; line-height:1000%; font-size:24px;">
+        欢迎登录个人博客后台<br>
+        <p style="color:#aaa;">Welcome everybody！</p>
+    </div>
+</div>
+
+<div th:fragment="articleList">
+    <button type="button" tooltip="添加用户" class="btn btn-sm btn-success btn-addon" onClick="window.location.href='/admin/addArticle'"> <i class="fa fa-plus"></i> Add
+    </button>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-body">
+                    <div th:if="${error} != null" th:text="${error}" class="alert alert-danger"></div>
+                    <div th:if="${success} !=null" th:text="${success}" class="alert alert-success"></div>
+                    <div class="flip-scroll">
+                        <table class="table table-bordered table-hover">
+                            <thead class="">
+                            <tr>
+                                <th class="text-center">标题</th>
+                                <th class="text-center">分类</th>
+                                <th class="text-center">创建时间</th>
+                                <th class="text-center">修改时间</th>
+                                <th class="text-center">点击量</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="article : ${articles}">
+                                <td align="center" th:text="${article.getTitle()}"></td>
+                                <td align="center" th:text="${article.getCatename()}"></td>
+                                <td align="center" th:text="${#dates.format(article.getCreateTime(),'yyyy-MM-dd')}"></td>
+                                <td align="center" th:text="${#dates.format(article.getUpdateTime(),'yyyy-MM-dd')}"></td>
+                                <td align="center" th:text="${article.getClick()}"></td>
+                                <td align="center">
+                                    <a th:href="@{/admin/modArticle(id=${article.getId()})}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" th:onClick="'javascript:warning(\'确定要删除吗\', \'/admin/deleteArticle?id='+${article.getId()}+'\')'" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="cateList">
+    <button type="button" tooltip="添加用户" class="btn btn-sm btn-success btn-addon" onClick="window.location.href='/admin/addCate'"> <i class="fa fa-plus"></i> Add
+    </button>
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-body">
+                    <div th:if="${error} != null" th:text="${error}" class="alert alert-danger"></div>
+                    <div th:if="${success} !=null" th:text="${success}" class="alert alert-success"></div>
+                    <div class="flip-scroll">
+                        <table class="table table-bordered table-hover">
+                            <thead class="">
+                            <tr>
+                                <th class="text-center">栏目名</th>
+                                <th class="text-center">数量</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cateView : ${cateViews}">
+                                <td align="center" th:text="${cateView.getCatename()}"></td>
+                                <td align="center" th:text="${cateView.getNum()}"></td>
+                                <td align="center">
+                                    <a th:href="@{/admin/modCate(cateName=${cateView.getCatename()})}" class="btn btn-primary btn-sm shiny">
+                                        <i class="fa fa-edit"></i> 编辑
+                                    </a>
+                                    <a href="#" th:onClick="'javascript:warning(\'确定要删除吗\', \'/admin/deleteCate?cateName='+${cateView.getCatename()}+'\')'" class="btn btn-danger btn-sm shiny">
+                                        <i class="fa fa-trash-o"></i> 删除
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="addArticle">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption">新增文章</span>
+                </div>
+                <div class="widget-body">
+                    <div id="horizontal-form">
+                        <form class="form-horizontal" role="form" th:action="@{/admin/addArticle}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="act" value="add">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label no-padding-right">标题</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="title" placeholder="标题" name="title" required="required" type="text">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+
+                            <!--<div class="form-group">-->
+                                <!--<label for="group_id" class="col-sm-2 control-label no-padding-right">标签</label>-->
+                                <!--<div class="col-sm-6">-->
+                                    <!--<select name="keywords[]" class="selectpicker form-control" multiple="multiple" style="width: 100%;">-->
+                                        <!--@foreach($tags as $tag)-->
+                                        <!--<option  value="{{$tag->tagname}}">{{$tag->tagname}}</option>-->
+                                        <!--@endforeach-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label no-padding-right">文章简介</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" id="description" cols="80" rows="5" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none">
+                                <label for="content" class="col-sm-2 control-label no-padding-right">文章内容</label>
+                                <div class="col-sm-6" >
+                                    <textarea name="content" id="content" cols="80" rows="5" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contentEditor" class="col-sm-2 control-label no-padding-right">文章内容</label>
+                                <div class="col-sm-6" id="contentEditor">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cateName" class="col-sm-2 control-label no-padding-right">分类</label>
+                                <div class="col-sm-6">
+                                    <select name="cateName" id="cateName" class="selectpicker" style="width: 100%;">
+                                        <option  th:each="cate : ${cates}" th:value="${cate.getCatename()}" th:text="${cate.getCatename()}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="save" class="btn btn-default">保存信息</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:fragment="modArticle">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption">修改文章</span>
+                </div>
+                <div class="widget-body">
+                    <div id="horizontal-form">
+                        <form class="form-horizontal" role="form" th:action="@{/admin/modArticle}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="act" value="add">
+                            <input type="hidden" name="id" th:value="${article.getId()}">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label no-padding-right">标题</label>
+                                <div class="col-sm-6">
+                                    <input th:value="${article.getTitle()}" class="form-control" id="title" placeholder="标题" name="title" required="required" type="text">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+
+                            <!--<div class="form-group">-->
+                            <!--<label for="group_id" class="col-sm-2 control-label no-padding-right">标签</label>-->
+                            <!--<div class="col-sm-6">-->
+                            <!--<select name="keywords[]" class="selectpicker form-control" multiple="multiple" style="width: 100%;">-->
+                            <!--@foreach($tags as $tag)-->
+                            <!--<option  value="{{$tag->tagname}}">{{$tag->tagname}}</option>-->
+                            <!--@endforeach-->
+                            <!--</select>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label no-padding-right">文章简介</label>
+                                <div class="col-sm-6">
+                                    <textarea name="description" th:text="${article.getDescription()}" id="description" cols="80" rows="5" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="display: none">
+                                <label for="content" class="col-sm-2 control-label no-padding-right">文章内容</label>
+                                <div class="col-sm-6" >
+                                    <textarea name="content" th:text="${article.getContent()}" id="content" cols="105" rows="5" ></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="contentEditor" class="col-sm-2 control-label no-padding-right">文章内容</label>
+                                <div class="col-sm-6" id="contentEditor" th:utext="${article.getContent()}">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="cateName" class="col-sm-2 control-label no-padding-right">分类</label>
+                                <div class="col-sm-6">
+                                    <select name="cateName" id="cateName" class="selectpicker" style="width: 100%;">
+                                        <option  th:each="cate : ${cates}" th:value="${cate.getCatename()}" th:text="${cate.getCatename()}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="save" class="btn btn-default">保存信息</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="addCate">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption">新增栏目</span>
+                </div>
+                <div class="widget-body">
+                    <div id="horizontal-form">
+                        <form class="form-horizontal" role="form" th:action="@{/admin/addCate}" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label no-padding-right">栏目名</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="cateName" placeholder="栏目名" name="cateName" required="required" type="text">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="save" class="btn btn-default">保存信息</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="modCate">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="widget">
+                <div class="widget-header bordered-bottom bordered-blue">
+                    <span class="widget-caption">修改栏目</span>
+                </div>
+                <div class="widget-body">
+                    <div id="horizontal-form">
+                        <form class="form-horizontal" role="form" th:action="@{/admin/modCate}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="oldName" th:value="${cateName}">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label no-padding-right">栏目名</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" id="cateName" placeholder="栏目名" name="cateName" th:value="${cateName}" required="required" type="text">
+                                </div>
+                                <p class="help-block col-sm-4 red">* 必填</p>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" id="save" class="btn btn-default">保存信息</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

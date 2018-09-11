@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xike.blog.dao.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.xike.blog.model.Article">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="click" jdbcType="INTEGER" property="click" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="cateid" jdbcType="INTEGER" property="cateid" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="catename" jdbcType="VARCHAR" property="catename" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tp_article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xike.blog.model.Article">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into tp_article (title, description, catename, content
+      )
+    values (#{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+       #{catename,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.xike.blog.model.Article">
+    update tp_article
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      catename = #{catename,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByCateName">
+    update tp_article
+    set catename = #{param2}
+    where catename = #{param1}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, description, keywords, click, create_time, update_time,
+    catename, content
+    from tp_article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCateName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, title, description, keywords, click, create_time, update_time,
+           catename, content
+    from tp_article
+    where catename = #{cateName,jdbcType=VARCHAR} order by create_time desc
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, description, keywords, click, create_time, update_time,
+    catename, content
+    from tp_article order by create_time desc
+  </select>
+</mapper>
