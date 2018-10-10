@@ -1,0 +1,5 @@
+git test
+vim is the best text editor
+12367
+Add new line
+This is a test (file); add new words
